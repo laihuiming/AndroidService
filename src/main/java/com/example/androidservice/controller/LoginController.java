@@ -4,6 +4,7 @@ package com.example.androidservice.controller;
 import com.alibaba.fastjson2.JSON;
 import com.example.androidservice.base.Result;
 import com.example.androidservice.entity.SystemUser;
+import com.example.androidservice.service.CurrencyService;
 import com.example.androidservice.service.UserService;
 import com.example.androidservice.utils.JwtTokenUtil;
 import io.swagger.annotations.Api;
@@ -31,11 +32,20 @@ public class LoginController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    CurrencyService currencyService;
+
     //登录
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
-    public Result login(String userName,String password){
+    public Result login(String sid,String userName,String password,String verificationCode){
         SystemUser systemUser;
+        if (!StringUtils.isEmpty(verificationCode)){
+            boolean success = currencyService.checkVerificationCode(sid, verificationCode);
+            if (!success){
+                return Result.fail("验证码错误,请检查");
+            }
+        }
         //验证账号密码有效性
         systemUser = userService.checkLogin(userName,password);
         if (systemUser == null){

@@ -33,7 +33,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
         LambdaQueryWrapper<SystemUser> wrapper = new LambdaQueryWrapper();
         wrapper.eq(SystemUser::getUserName,userName);
         wrapper.eq(SystemUser::getPassWord, PassWordUtil.sm3Encrypt(userName,password));
-        SystemUser user = this.baseMapper.selectOne(wrapper);
-        return user;
+        return this.baseMapper.selectOne(wrapper);
     }
 }

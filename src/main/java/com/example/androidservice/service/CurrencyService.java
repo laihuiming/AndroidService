@@ -13,4 +13,6 @@ public interface CurrencyService {
     String getRandomKeyBySid(String sid);
 
     void saveVerificationCode(String sid, String code);
+
+    boolean checkVerificationCode(String sid, String code);
 }

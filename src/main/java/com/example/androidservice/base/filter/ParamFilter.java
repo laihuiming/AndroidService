@@ -204,7 +204,7 @@ public class ParamFilter implements Filter {
         }else {
             params = DESUtil.decrypt(params,randomKey);
         }
-        return null;
+        return params;
     }
 
     private static Map<String,String> getRequestParams(HttpServletRequest request) {
