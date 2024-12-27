@@ -47,15 +47,23 @@ public class UserController {
     }
 
     //修改密码
-    public Result changePassword(){
+    @ResponseBody
+    @RequestMapping("/changePassword")
+    public Result changePassword(String oldPassword,String newPassword){
+        userService.changePassword(platFormService.getCurrentUser(),oldPassword,newPassword);
         return Result.success();
     }
 
     //修改用户信息
+    @ResponseBody
+    @RequestMapping("/update")
     public Result update(SystemUser user){
+        userService.updateById(user);
         return Result.success();
     }
 
+    //获取当前用户信息
+    @ResponseBody
     @RequestMapping("/getCurrentUserInfo")
     public Result getCurrentUserInfo(){
         SystemUser currentUser = platFormService.getCurrentUser();

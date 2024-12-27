@@ -35,4 +35,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
         wrapper.eq(SystemUser::getPassWord, PassWordUtil.sm3Encrypt(userName,password));
         return this.baseMapper.selectOne(wrapper);
     }
+
+    @Override
+    public void changePassword(SystemUser systemUser, String oldPassword, String newPassword) {
+        String passWord = systemUser.getPassWord();
+        if(!PassWordUtil.sm3Encrypt(systemUser.getUserName(),oldPassword).equals(passWord)){
+            throw new RuntimeException("旧密码错误");
+        }
+        systemUser.setPassWord(PassWordUtil.sm3Encrypt(systemUser.getUserName(),newPassword));
+        this.updateById(systemUser);
+    }
+
+
 }

@@ -18,4 +18,6 @@ public interface UserService extends IService<SystemUser> {
     void register(SystemUser user);
 
     SystemUser checkLogin(String userName, String password);
+
+    void changePassword(SystemUser systemUser, String oldPassword, String newPassword);
 }
